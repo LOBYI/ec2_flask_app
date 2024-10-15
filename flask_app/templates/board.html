@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        table {
+            width: 100%;
+            border-top: 1px solid #444444;
+            border-collapse: collapse;
+        }
+        th, td {
+            border-bottom: 1px solid #444444;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #bbdefb;
+        }
+        td {
+            background-color: #e3f2fd;
+        }
+</style>
+</head>
+ 
+<body>
+    <p>
+        <h1> Hello! </h1>
+        <h1> You can also write your own javascript</h1>
+        <h2> EX: ?javascript=........ </h2> 
+        <h1> <script>{{free_write}}</script> </h1>
+        <script>
+            function getParameter(name) {
+                var result = window.location.search.match(
+                    new RegExp("(\\?|&)"+name+"(\\[\\])?=([^&]*)")
+                )
+                return result[3]
+            }
+        </script>
+        <!-- <script>var search = getParameter("search")</script> -->
+
+        <form action="/board" method="GET">
+            <input type="text" name="search" placeholder="search" value="{{search|safe}}">
+            <input type="submit">
+        </form>
+    </p>
+ 
+   
+ 
+    <table class="table">
+        <tr>
+            <th>writer</th>
+            <th>title</th>
+            <th>content</th>
+        </tr>
+        {% for obj in data_list%}
+        <tbody>
+            <tr>
+                <td>{{obj.writer}}</td>
+                <td>{{obj.title}}</td>
+                <td>{{obj.content}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <a href="/board_write">write</a> <br> <br>
+</body>
+ 
+</html>
+
+{% endblock %}
